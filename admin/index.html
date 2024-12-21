@@ -42,6 +42,15 @@
                 }
             });
         }
+
+        // Handle invite token redirection
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.hash.substring(1));
+            const inviteToken = urlParams.get('invite_token');
+            if (inviteToken) {
+                window.location.href = `/admin/#invite_token=${inviteToken}`;
+            }
+        });
     </script>  
 </body>
 </html>
