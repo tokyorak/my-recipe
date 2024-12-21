@@ -5,7 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
     <title>Today's Recipe</title>
-    <script type="text/javascript" src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <!-- <script type="text/javascript" src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script> -->
+    <script>
+        netlifyIdentity.on('init', user => console.log('init', user));
+        netlifyIdentity.on('login', user => console.log('login', user));
+        netlifyIdentity.on('logout', () => console.log('Logged out'));
+        netlifyIdentity.on('error', err => console.error('Error', err));
+        netlifyIdentity.on('open', () => console.log('Widget opened'));
+        netlifyIdentity.on('close', () => console.log('Widget closed'));
+    </script>
     <script>
         // handle invite token redirection
         document.addEventListener('DOMContentLoaded', function() {
