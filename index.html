@@ -5,6 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
     <title>Today's Recipe</title>
+    <script>
+        // handle invite token redirection
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.hash.substr(1));
+            const inviteToken = urlParams.get('invite_token');
+            if (inviteToken) {
+                window.location.href = `/admin/#invite_token=${inviteToken}`;
+            }
+        })
+    </script>
 </head>
 <body>
     <h1 class="title">Delicious Homemade Pizza</h1>
