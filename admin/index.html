@@ -4,10 +4,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Content Manager</title>
-    <!-- <script src="https://unpkg.com/netlify-cms@^2.0.0/dist/netlify-cms.js"></script> -->
     <script type="text/javascript" src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #f6d365 0%, #fda085 50%, #fbc2eb 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .login-button {
+            background: #fff;
+            padding: 15px 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        .login-button:hover {
+            background: #f0f0f0;
+        }
+    </style>
 </head>
 <body>
-    <div data-netlify-identity-button>Login with Netlify Identity</div>    
+    <div class="login-button" data-netlify-identity-button>Login with Netlify Identity</div>    
 </body>
 </html>
