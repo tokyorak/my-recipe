@@ -24,11 +24,29 @@
             if (inviteToken) {
                 window.location.href = `/admin/#invite_token=${inviteToken}`;
             }
+
+            // Fetch and display posts
+            fetch('/_posts')
+                .then(response => response.json())
+                .then(posts => {
+                    const postsContainer = document.getElementById('posts');
+                    posts.forEach(post => {
+                        const postElement = document.createElement('div');
+                        postElement.className = 'post';
+                        postElement.innerHTML = `
+                            <h2><a href="${post.url}">${post.title}</a></h2>
+                            <p>${post.date}</p>
+                        `;
+                        postsContainer.appendChild(postElement);
+                    })
+                })
         });
     </script>
 </head>
 <body>
-    <h1 class="title">Delicious Homemade Pizza</h1>
+    <h1 class="title">Today's Recipes</h1>
+    <div id="posts"></div>
+    <!-- <h1 class="title">Delicious Homemade Pizza</h1>
     <img src="images/main-image.jpg" alt="Homemade Pizza" class="recipe-image">
     
     <section class="ingredients">
@@ -95,6 +113,6 @@
                 </ol>
             </div>
         </div>
-    </section>
+    </section> -->
 </body>
 </html>

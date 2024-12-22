@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>{{ title }}</title>
+</head>
+<body>
+    <h1>{{ title }}</h1>
+    <img src="{{ image }}" alt="{{ title }}" class="recipe-image">
+    <section class="ingredients">
+        <h2>Ingredients</h2>
+        <div class="cards">
+            <div class="card">
+                <h3>English</h3>
+                <ul>
+                    {{#each ingredients_en}}
+                    <li>{{ this }}</li>
+                    {{/each}}
+                </ul>
+            </div>
+            <div class="card">
+                <h3>Polish</h3>
+                <ul>
+                    {{#each ingredients_pl}}
+                    <li>{{ this }}</li>
+                    {{/each}}
+                </ul>
+            </div>
+        </div>
+    </section>
+    <section class="instructions">
+        <h2>Instructions</h2>
+        <div class="cards">
+            <div class="card">
+                <h3>English</h3>
+                {{{ instructions_en }}}
+            </div>
+            <div class="card">
+                <h3>Polish</h3>
+                {{{ instructions_pl }}}
+            </div>
+        </div>
+    </section>
+</body>
+</html>
