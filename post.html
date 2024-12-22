@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
     <title>Recipe</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/15.0.4/marked.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const urlParams = new URLSearchParams(window.location.search);
@@ -20,22 +21,14 @@
                         document.getElementById('post-image').alt = post.title;
                         document.getElementById('post-date').innerText = post.date;
 
-                        const ingredientsEn = document.getElementById('ingredients-en');
-                        post.ingredients_en.forEach(ingredient => {
-                            const li = document.createElement('li');
-                            li.innerText = ingredient;
-                            ingredientsEn.appendChild(li);
-                        });
-
-                        const ingredientsPl = document.getElementById('ingredients-pl');
-                        post.ingredients_pl.forEach(ingredient => {
-                            const li = document.createElement('li');
-                            li.innerText = ingredient;
-                            ingredientsPl.appendChild(li);
-                        });
-
-                        document.getElementById('instructions-en').innerHTML = post.instructions_en.replace(/\n/g, '<br>');
-                        document.getElementById('instructions-pl').innerHTML = post.instructions_pl.replace(/\n/g, '<br>');
+                        if(typeof marked !== 'undefined') {
+                            document.getElementById('ingredients-en').innerHTML = marked(post.ingredients_en);
+                            document.getElementById('ingredients-pl').innerHTML = marked(post.ingredients_pl);
+                            document.getElementById('instructions-en').innerHTML = marked(post.instructions_en);
+                            document.getElementById('instructions-pl').innerHTML = marked(post.instructions_pl);
+                        } else {
+                            console.error('marked is not defined');
+                        }
                     });
             }
         });
@@ -50,11 +43,11 @@
         <div class="cards">
             <div class="card">
                 <h3>English</h3>
-                <ul id="ingredients-en"></ul>
+                <div id="ingredients-en"></div>
             </div>
             <div class="card">
                 <h3>Polish</h3>
-                <ul id="ingredients-pl"></ul>
+                <div id="ingredients-pl"></div>
             </div>
         </div>
     </section>
