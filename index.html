@@ -36,10 +36,11 @@
                         postElement.innerHTML = `
                             <h2><a href="${post.url}">${post.title}</a></h2>
                             <p>${post.date}</p>
+                            <img src="${post.image}" alt="${post.title}" class="recipe-image">
                         `;
                         postsContainer.appendChild(postElement);
-                    })
-                })
+                    });
+                });
         });
     </script>
 </head>
