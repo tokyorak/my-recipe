@@ -1,6 +1,6 @@
 backend:
   name: git-gateway
-  repo: "tokyorak/my-recipe"
+  # repo: "tokyorak/my-recipe"
   branch: main
 
 media_folder: "images/uploads"

@@ -37,7 +37,8 @@
         if (window.netlifyIdentity) {
             window.netlifyIdentity.on("init", user => {
                 if (user) {
-                    document.location.href = "/admin/";
+                    // User is already logged in, initialize CMS
+                    initCMS();
                 } else {
                     window.netlifyIdentity.on("login", () => {
                         document.location.href = "/admin/";
@@ -57,6 +58,13 @@
                 window.location.href = `/admin/#confirmation_token=${confirmationToken}`;
             }
         });
+
+        function initCMS() {
+            // Initialize Netlify CMS
+            const script = document.createElement('script');
+            script.src = 'https://unpkg.com/netlify-cms@^2.0.0/dist/netlify-cms.js';
+            document.body.appendChild(script);
+        }
     </script>  
 </body>
 </html>
