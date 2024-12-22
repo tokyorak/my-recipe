@@ -17,7 +17,7 @@ collections:
       - { label: "Title", name: "title", widget: "string" }
       - { label: "Date", name: "date", widget: "datetime" }
       - { label: "Image", name: "image", widget: "image" }
-      - { label: "Ingredients (English)", name: "ingredients_en", widget: "list" }
-      - { label: "Ingredients (Polish)", name: "ingredients_pl", widget: "list" }
+      - { label: "Ingredients (English)", name: "ingredients_en", widget: "list", hint: "Add ingredients one by one" }
+      - { label: "Ingredients (Polish)", name: "ingredients_pl", widget: "list", hint: "Add ingredients one by one" }
       - { label: "Instructions (English)", name: "instructions_en", widget: "markdown" }
       - { label: "Instructions (Polish)", name: "instructions_pl", widget: "markdown" }
