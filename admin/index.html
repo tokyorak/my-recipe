@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Content Manager</title>
     <script type="text/javascript" src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <script src="https://unpkg.com/netlify-cms@^2.0.0/dist/netlify-cms.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -35,7 +36,9 @@
         // Initialize Netlify Identity
         if (window.netlifyIdentity) {
             window.netlifyIdentity.on("init", user => {
-                if (!user) {
+                if (user) {
+                    document.location.href = "/admin/";
+                } else {
                     window.netlifyIdentity.on("login", () => {
                         document.location.href = "/admin/";
                     });
@@ -43,15 +46,14 @@
             });
         }
 
-        // Handle invite token redirection
+        // Handle invite token and confirmation token redirection
         document.addEventListener('DOMContentLoaded', function() {
             const urlParams = new URLSearchParams(window.location.hash.substring(1));
             const inviteToken = urlParams.get('invite_token');
             const confirmationToken = urlParams.get('confirmation_token');
             if (inviteToken) {
                 window.location.href = `/admin/#invite_token=${inviteToken}`;
-            }
-            else if (confirmationToken) {
+            } else if (confirmationToken) {
                 window.location.href = `/admin/#confirmation_token=${confirmationToken}`;
             }
         });
