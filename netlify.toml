@@ -1,0 +1,5 @@
+[build]
+    command = "node scripts/generatePostsJson.js && npm run build"
+    publish = "."
+
+# Add other configuration options here
