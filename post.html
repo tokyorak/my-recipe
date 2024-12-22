@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
     <title>Recipe</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/15.0.4/marked.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const urlParams = new URLSearchParams(window.location.search);
@@ -19,16 +18,49 @@
                         document.getElementById('post-title').innerText = post.title;
                         document.getElementById('post-image').src = post.image;
                         document.getElementById('post-image').alt = post.title;
-                        document.getElementById('post-date').innerText = post.date;
 
-                        if(typeof marked !== 'undefined') {
-                            document.getElementById('ingredients-en').innerHTML = marked(post.ingredients_en);
-                            document.getElementById('ingredients-pl').innerHTML = marked(post.ingredients_pl);
-                            document.getElementById('instructions-en').innerHTML = marked(post.instructions_en);
-                            document.getElementById('instructions-pl').innerHTML = marked(post.instructions_pl);
-                        } else {
-                            console.error('marked is not defined');
-                        }
+                        // format date as "Month Day, Year"
+                        const date = new Date(post.date);
+                        const formattedDate = date.toLocaleDateString('en-US', {
+                            month: 'long',
+                            day: 'numeric',
+                            year: 'numeric'
+                        });
+                        document.getElementById('post-date').innerText = formattedDate;
+
+                        // convert markdown-style list items to HTML list items
+                        const convertToListItems = (markdown) => {
+                            const lines = markdown.split('\n');
+                            const listItems = lines.map(line => {
+                                const trimmedLine = line.trim();
+                                if (trimmedLine.startsWith('*') || trimmedLine.startsWith('-')) {
+                                    return `<li>${trimmedLine.substring(1).trim()}</li>`;
+                                }
+                                return '';
+                            }).join('');
+                            return `<ul>${listItems}</ul>`;
+                        };
+
+                        // convert instruction to an ordered list
+                        const convertToOrderedList = (markdown) => {
+                            const lines = markdown.split('\n');
+                            const listItems = lines.map(line => {
+                                const trimmedLine = line.trim();
+                                //remove starting numbers if present
+                                const cleanedLine = trimmedLine.replace(/^\d+\.\s*/, '');
+                                return `<li>${cleanedLine}</li>`;
+                            }).join('');
+                            return `<ol>${listItems}</ol>`;
+                        };
+
+                        // Render markdown content as plain text
+                        document.getElementById('ingredients-en').innerHTML = convertToListItems(post.ingredients_en);
+                        document.getElementById('ingredients-pl').innerHTML = convertToListItems(post.ingredients_pl);
+                        document.getElementById('instructions-en').innerHTML = convertToOrderedList(post.instructions_en);
+                        document.getElementById('instructions-pl').innerHTML = convertToOrderedList(post.instructions_pl);
+                    })
+                    .catch(error => {
+                        console.error('Error fetching post:', error);
                     });
             }
         });
@@ -37,7 +69,7 @@
 <body>
     <h1 id="post-title"></h1>
     <img id="post-image" class="recipe-image" alt="">
-    <p id="post-date"></p>
+    <p id="post-date" class="post-date"></p>
     <section class="ingredients">
         <h2>Ingredients</h2>
         <div class="cards">
