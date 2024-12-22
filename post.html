@@ -4,29 +4,57 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
-    <title>{{ title }}</title>
+    <title>Recipe</title>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const postUrl = urlParams.get('post');
+
+            if (postUrl) {
+                fetch(postUrl)
+                    .then(response => response.json())
+                    .then(post => {
+                        document.title = post.title;
+                        document.getElementById('post-title').innerText = post.title;
+                        document.getElementById('post-image').src = post.image;
+                        document.getElementById('post-image').alt = post.title;
+                        document.getElementById('post-date').innerText = post.date;
+
+                        const ingredientsEn = document.getElementById('ingredients-en');
+                        post.ingredients_en.forEach(ingredient => {
+                            const li = document.createElement('li');
+                            li.innerText = ingredient;
+                            ingredientsEn.appendChild(li);
+                        });
+
+                        const ingredientsPl = document.getElementById('ingredients-pl');
+                        post.ingredients_pl.forEach(ingredient => {
+                            const li = document.createElement('li');
+                            li.innerText = ingredient;
+                            ingredientsPl.appendChild(li);
+                        });
+
+                        document.getElementById('instructions-en').innerHTML = post.instructions_en.replace(/\n/g, '<br>');
+                        document.getElementById('instructions-pl').innerHTML = post.instructions_pl.replace(/\n/g, '<br>');
+                    });
+            }
+        });
+    </script>
 </head>
 <body>
-    <h1>{{ title }}</h1>
-    <img src="{{ image }}" alt="{{ title }}" class="recipe-image">
+    <h1 id="post-title"></h1>
+    <img id="post-image" class="recipe-image" alt="">
+    <p id="post-date"></p>
     <section class="ingredients">
         <h2>Ingredients</h2>
         <div class="cards">
             <div class="card">
                 <h3>English</h3>
-                <ul>
-                    {{#each ingredients_en}}
-                    <li>{{ this }}</li>
-                    {{/each}}
-                </ul>
+                <ul id="ingredients-en"></ul>
             </div>
             <div class="card">
                 <h3>Polish</h3>
-                <ul>
-                    {{#each ingredients_pl}}
-                    <li>{{ this }}</li>
-                    {{/each}}
-                </ul>
+                <ul id="ingredients-pl"></ul>
             </div>
         </div>
     </section>
@@ -35,11 +63,11 @@
         <div class="cards">
             <div class="card">
                 <h3>English</h3>
-                {{{ instructions_en }}}
+                <div id="instructions-en"></div>
             </div>
             <div class="card">
                 <h3>Polish</h3>
-                {{{ instructions_pl }}}
+                <div id="instructions-pl"></div>
             </div>
         </div>
     </section>
